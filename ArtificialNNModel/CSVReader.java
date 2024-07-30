@@ -1,4 +1,4 @@
-package ReadCSV;
+package ArtificialNNModel;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
