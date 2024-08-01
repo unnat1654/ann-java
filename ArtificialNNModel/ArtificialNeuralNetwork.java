@@ -3,9 +3,7 @@ package ArtificialNNModel;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.IllegalArgumentException;
-import java.util.Arrays;
 import java.io.FileReader;
-import java.io.IOException;
 
 
 
@@ -25,7 +23,6 @@ public class ArtificialNeuralNetwork {
      */
     public ArtificialNeuralNetwork() {
         this.levels = new Layer[0];
-        this.outputOfNeurons = new double[0][0];
     }
 
     /**
@@ -101,6 +98,9 @@ public class ArtificialNeuralNetwork {
                 }
             }
         }
+        parts=null;
+        neuronsParts=null;
+        neuronsCount=null;
     }
 
     /**
@@ -252,7 +252,7 @@ public class ArtificialNeuralNetwork {
             throw new IllegalStateException("The neural network layers not set up properly. Input and output layers are required.");
         }
         if (inputs[0].length != levels[0].numberOfNeurons || inputs.length != outputs.length) {
-            throw new IllegalArgumentException("No of classes in input are not valid");
+            throw new IllegalArgumentException("Number of classes in input are not valid:"+inputs[0].length);
         }
         this.outputOfNeurons = new double[this.outputNeuronsCount][outputs.length];
 
@@ -275,6 +275,7 @@ public class ArtificialNeuralNetwork {
             System.out.println("\tModel Accuracy: " + accuracy);
             backPropogation();
         }
+        this.outputOfNeurons=null;
     }
 
     /**
@@ -328,6 +329,7 @@ public class ArtificialNeuralNetwork {
 
         try (FileWriter file = new FileWriter(filename)) {
             file.write(json.toString());
+            json.delete(0, json.length());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -339,6 +341,7 @@ public class ArtificialNeuralNetwork {
         for (int i = 0; i < temp.length; i++) {
             this.levels[i] = temp[i];
         }
+        temp=null;
     }
 
     private String arrayToJson(double[] array) {

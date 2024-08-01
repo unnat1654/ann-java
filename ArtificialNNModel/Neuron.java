@@ -51,6 +51,7 @@ class Neuron {
                 }
                 temp[newPrevInputSize - 1] = Arrays.copyOf(inputs, inputs.length);
                 this.previousInputs = temp;
+                temp=null;
             }
         }
 

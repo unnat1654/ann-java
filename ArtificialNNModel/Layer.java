@@ -58,11 +58,17 @@ class Layer {
 
         IntStream.range(0,addedThisLayerError.length).parallel().forEach(i->
             IntStream.range(0, addedThisLayerError[i].length).parallel().forEach(j->{
-                for(int k=0;k<numberOfNeurons;k++){
+                for(int k=0;k<this.numberOfNeurons;k++){
                     addedThisLayerError[i][j]+=this.neurons[k].errorForPreviousLayer[j][i];
+                }
+                for(Neuron neuron: this.neurons){
+                    addedThisLayerError[i][j]+=neuron.errorForPreviousLayer[j][i];
                 }
             })
         );
+        for(Neuron neuron: this.neurons){
+            neuron.errorForPreviousLayer=null;
+        }
 
         return addedThisLayerError;
     }
